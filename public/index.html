@@ -37,6 +37,11 @@
     padding: 10px;
     margin-top: 4%;
 }
+
+#generate_text{
+  margin: 15px;
+}
+
   </style>
 </head>
 <body>
@@ -63,6 +68,12 @@ let aioutput
 
 function generateContent(){
   console.log("clicked")
+
+  document.getElementById("result").innerHTML = `<div id="generate_text"> Generating Diagram...</div>`
+
+
+  
+
 
 const userInput = document.getElementById('userInput').value;
     
