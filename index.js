@@ -3,6 +3,7 @@ import { dirname } from 'path';
 import fs from 'fs';
 import plantumlEncoder from 'plantuml-encoder'
 import express from 'express';
+import axios from 'axios';
 
 // Use import.meta.url to get the module's URL
 const __filename = fileURLToPath(import.meta.url);
@@ -16,13 +17,12 @@ async function createUML(umlText) {
   console.log(url);
 
   try {
-    const response = await fetch(url);
-  
-    if (response.status === 200 && response.headers.get('content-type') === 'image/svg+xml') {
+    const response = await axios.get(url);
+
+    if (response.status === 200 && response.headers['content-type'] === 'image/svg+xml') {
       // Assuming the response is SVG content, return it
-      const svgText = await response.text();
-      console.log('SVG content:\n', svgText);
-      return svgText;
+      console.log('SVG content:\n', response.data);
+      return response.data;
     } else {
       console.error('The response is not an SVG.');
       return null; // Return null or handle the error as needed
@@ -31,7 +31,6 @@ async function createUML(umlText) {
     console.error('Error fetching the SVG:', error);
     return null; // Return null or handle the error as needed
   }
-  
 }
 
 
